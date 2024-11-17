@@ -4,6 +4,8 @@
 #include <vector>
 #include "SDL.h"
 
+#define PROBABILITY 50
+
 class Snake
 {
 public:
