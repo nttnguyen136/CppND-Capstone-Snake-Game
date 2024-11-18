@@ -41,7 +41,7 @@ void Game::Run(Controller const &controller, std::unique_ptr<Renderer> &renderer
   {
     frame_start = SDL_GetTicks();
 
-    controller.HandleInput(is_running, snake);
+    controller.HandleInput(is_running, snake, *this);
     Update();
     renderer->Render(snake, food, SpecialFood);
 
@@ -105,7 +105,7 @@ void Game::PlaceSpecialFood()
 
 void Game::Update()
 {
-  if (!snake.alive)
+  if (!snake.alive || pause)
     return;
 
   snake.Update();
@@ -169,3 +169,8 @@ void Game::ScoreUpdateThread()
 
 int Game::GetScore() const { return score; }
 int Game::GetSize() const { return snake.size; }
+
+void Game::TogglePause()
+{
+  pause = !pause;
+}

@@ -11,6 +11,7 @@
 #include "snake.h"
 #include "GameSessionLogger.h"
 
+
 class Game
 {
 public:
@@ -21,6 +22,7 @@ public:
 
   int GetScore() const;
   int GetSize() const;
+  void TogglePause();
 
 private:
   void PlaceFood();
@@ -45,6 +47,7 @@ private:
   bool running{true};
   std::thread scoreThread;
   std::promise<void> exitSignal;
+  bool pause{false};
 };
 
 #endif // GAME_H
