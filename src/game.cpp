@@ -170,7 +170,7 @@ void Game::ScoreUpdateThread()
 int Game::GetScore() const { return score; }
 int Game::GetSize() const { return snake.size; }
 
-void Game::TogglePause()
+void Game::TogglePause(bool isPause)
 {
-  pause = !pause;
+  pause = !pause && isPause;
 }

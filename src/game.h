@@ -22,7 +22,7 @@ public:
 
   int GetScore() const;
   int GetSize() const;
-  void TogglePause();
+  void TogglePause(bool isPause = false);
 
 private:
   void PlaceFood();

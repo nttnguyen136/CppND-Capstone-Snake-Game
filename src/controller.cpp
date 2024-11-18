@@ -27,21 +27,25 @@ void Controller::HandleInput(bool &running, Snake &snake, Game &game) const
       switch (e.key.keysym.sym)
       {
       case SDLK_UP:
+        game.TogglePause(false);
         ChangeDirection(snake, Snake::Direction::kUp,
                         Snake::Direction::kDown);
         break;
 
       case SDLK_DOWN:
+        game.TogglePause(false);
         ChangeDirection(snake, Snake::Direction::kDown,
                         Snake::Direction::kUp);
         break;
 
       case SDLK_LEFT:
+        game.TogglePause(false);
         ChangeDirection(snake, Snake::Direction::kLeft,
                         Snake::Direction::kRight);
         break;
 
       case SDLK_RIGHT:
+        game.TogglePause(false);
         ChangeDirection(snake, Snake::Direction::kRight,
                         Snake::Direction::kLeft);
         break;
