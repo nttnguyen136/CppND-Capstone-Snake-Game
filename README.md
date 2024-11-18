@@ -1,35 +1,69 @@
-# CPPND: Capstone Snake Game Example
+# Capstone Snake Game
 
-This is a starter repo for the Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213). The code for this repo was inspired by [this](https://codereview.stackexchange.com/questions/212296/snake-game-in-c-with-sdl) excellent StackOverflow post and set of responses.
+Welcome to the Capstone project of the Udacity C++ Nanodegree Program. This repository serves as a starting point where you can either build a C++ application from scratch or enhance this Snake game. The goal is to showcase your ability to independently develop applications using various C++ features.
 
-<img src="snake_game.gif"/>
+## Dependencies
 
-The Capstone Project gives you a chance to integrate what you've learned throughout this program. This project will become an important part of your portfolio to share with current and future colleagues and employers.
+To build and run this project on your local machine, you need to install the following dependencies:
 
-In this project, you can build your own C++ application or extend this Snake game, following the principles you have learned throughout this Nanodegree Program. This project will demonstrate that you can independently create applications using a wide range of C++ features.
-
-## Dependencies for Running Locally
-* cmake >= 3.7
-  * All OSes: [click here for installation instructions](https://cmake.org/install/)
-* make >= 4.1 (Linux, Mac), 3.81 (Windows)
-  * Linux: make is installed by default on most Linux distros
-  * Mac: [install Xcode command line tools to get make](https://developer.apple.com/xcode/features/)
-  * Windows: [Click here for installation instructions](http://gnuwin32.sourceforge.net/packages/make.htm)
-* SDL2 >= 2.0
-  * All installation instructions can be found [here](https://wiki.libsdl.org/Installation)
-  >Note that for Linux, an `apt` or `apt-get` installation is preferred to building from source. 
-* gcc/g++ >= 5.4
-  * Linux: gcc / g++ is installed by default on most Linux distros
-  * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
-  * Windows: recommend using [MinGW](http://www.mingw.org/)
+- CMake: Version 3.7 or higher.
+- Make:
+  - Linux/Mac: Generally pre-installed. For macOS, it can be installed via Xcode command line tools.
+  - Windows: Can be installed via GnuWin32 Make.
+- SDL2: Version 2.0 or higher.
+- gcc/g++: Version 5.4 or higher.
+  - Linux: Typically pre-installed.
+  - Mac: Installed via Xcode command line tools.
+  - Windows: Recommended to use MinGW.
 
 ## Basic Build Instructions
 
-1. Clone this repo.
-2. Make a build directory in the top level directory: `mkdir build && cd build`
-3. Compile: `cmake .. && make`
-4. Run it: `./SnakeGame`.
+To get started, follow these steps:
 
+1. Clone the repository:
+    ```bash
+    git clone <repository-url>
+    ```
+
+2. Create a build directory and navigate into it:
+    ```bash
+    mkdir build && cd build
+    ```
+
+3. Compile the project:
+    ```bash
+    cmake .. && make
+    ```
+
+4. Execute the game:
+    ```bash
+    ./SnakeGame
+    ```
+
+## New Features
+
+1. Score Logging with Multi-threading
+Logs game details (date, score, size) in real-time without interrupting gameplay.
+2.	Special Food
+Randomly appears every 10 seconds; adds points without increasing snake size.
+3.	Pause/Resume
+Press ESC to pause the game. Resume by pressing ESC again or using any arrow key.
+4.	Smart Pointers
+Prevents memory leaks by managing SDL resources automatically.
+5.	Game Manager
+Centralized class for managing game state and logic.
+6.	Concurrency
+Uses multi-threading, promises, mutexes, and condition variables for performance.
+
+## Rubric Points Addressed
+
+This project demonstrates:
+
+1. C++ Functions and Control Structures: `src/game.cpp`
+2. Object-Oriented Programming: `src/GameManager.cpp`, `src/Renderer.cpp`
+3. File I/O: `src/GameSessionLogger.cpp`
+4. Smart Pointers: `src/Renderer.cpp`
+5. Concurrency: `src/GameSessionLogger.cpp`, `src/GameManager.cpp`
 
 ## CC Attribution-ShareAlike 4.0 International
 
