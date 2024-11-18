@@ -7,7 +7,7 @@
 #include "controller.h"
 #include "game.h"
 #include "renderer.h"
-#include "SnakeHistory.h"
+#include "GameSessionLogger.h"
 #include <chrono>
 
 class GameManager
@@ -16,11 +16,11 @@ public:
   GameManager(const std::string &userName, std::size_t screenWidth, std::size_t screenHeight,
               std::size_t gridWidth, std::size_t gridHeight, std::size_t msPerFrame)
       : renderer(std::make_unique<Renderer>(screenWidth, screenHeight, gridWidth, gridHeight)),
-        controller(), snakeHistory(), game(gridWidth, gridHeight, snakeHistory), kMsPerFrame(msPerFrame)
+        controller(), gameLogger(), game(gridWidth, gridHeight, gameLogger), kMsPerFrame(msPerFrame)
   {
 
-    snakeHistory.setUserName(userName);
-    snakeHistory.logStart();
+    gameLogger.setUserName(userName);
+    gameLogger.logStart();
   }
 
   void Run()
@@ -51,7 +51,7 @@ public:
     long elapsedTime = timeFuture.get();
 
     // Log the end of the game
-    snakeHistory.logEnd(finalScore, finalSize, elapsedTime);
+    gameLogger.logEnd(finalScore, finalSize, elapsedTime);
 
     std::cout << "Game Ended\n";
     std::cout << "Duration of Game: " << elapsedTime << " seconds\n";
@@ -84,7 +84,7 @@ private:
 
   std::unique_ptr<Renderer> renderer;
   Controller controller;
-  SnakeHistory snakeHistory;
+  GameSessionLogger gameLogger;
   Game game;
   const std::size_t kMsPerFrame;
 

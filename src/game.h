@@ -9,12 +9,12 @@
 #include "controller.h"
 #include "renderer.h"
 #include "snake.h"
-#include "SnakeHistory.h"
+#include "GameSessionLogger.h"
 
 class Game
 {
 public:
-  Game(std::size_t grid_width, std::size_t grid_height, SnakeHistory &snakeHistory);
+  Game(std::size_t grid_width, std::size_t grid_height, GameSessionLogger &gameLogger);
   ~Game();
   void Run(Controller const &controller, std::unique_ptr<Renderer> &renderer,
            std::size_t target_frame_duration);
@@ -37,7 +37,7 @@ private:
   SDL_Point SpecialFood;
   bool recreate{false};
   int countdown{10};
-  SnakeHistory &snakeHistory;
+  GameSessionLogger &gameLogger;
 
   std::mutex scoreMutex;
   std::condition_variable scoreCV;

@@ -1,12 +1,12 @@
 #include "game.h"
 #include <SDL.h>
 
-Game::Game(std::size_t grid_width, std::size_t grid_height, SnakeHistory &snakeHistory)
+Game::Game(std::size_t grid_width, std::size_t grid_height, GameSessionLogger &gameLogger)
     : snake(grid_width, grid_height),
       engine(std::random_device{}()),
       distribution_w(0, static_cast<int>(grid_width - 1)),
       distribution_h(0, static_cast<int>(grid_height - 1)),
-      snakeHistory(snakeHistory)
+      gameLogger(gameLogger)
 {
   PlaceFood();
   PlaceSpecialFood();
@@ -161,7 +161,7 @@ void Game::ScoreUpdateThread()
 
     if (scoreUpdated)
     {
-      snakeHistory.logScoreAndSizeChange(score, snake.size);
+      gameLogger.logScoreAndSizeChange(score, snake.size);
       scoreUpdated = false;
     }
   }
