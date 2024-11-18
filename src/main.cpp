@@ -13,10 +13,10 @@
 class GameManager
 {
 public:
-  GameManager(const std::string &userName, std::size_t screenWidth, std::size_t screenHeight,
-              std::size_t gridWidth, std::size_t gridHeight, std::size_t msPerFrame)
-      : renderer(std::make_unique<Renderer>(screenWidth, screenHeight, gridWidth, gridHeight)),
-        controller(), gameLogger(), game(gridWidth, gridHeight, gameLogger), kMsPerFrame(msPerFrame)
+  GameManager(const std::string &userName, std::size_t screenW, std::size_t screenH,
+              std::size_t gridW, std::size_t gridH, std::size_t msPerFrame)
+      : renderer(std::make_unique<Renderer>(screenW, screenH, gridW, gridH)),
+        controller(), gameLogger(), game(gridW, gridH, gameLogger), kMsPerFrame(msPerFrame)
   {
 
     gameLogger.setUserName(userName);
@@ -45,20 +45,17 @@ public:
               { return gameFinished; });
     }
 
-    // Retrieve the game results
-    int finalScore = scoreFuture.get();
-    int finalSize = sizeFuture.get();
+    int score = scoreFuture.get();
+    int size = sizeFuture.get();
     long elapsedTime = timeFuture.get();
 
-    // Log the end of the game
-    gameLogger.logEnd(finalScore, finalSize, elapsedTime);
+    gameLogger.logEnd(score, size, elapsedTime);
 
     std::cout << "Game Ended\n";
     std::cout << "Duration of Game: " << elapsedTime << " seconds\n";
-    std::cout << "Final Score Achieved: " << finalScore << "\n";
-    std::cout << "Final Length of Snake: " << finalSize << "\n";
+    std::cout << "Yuur Score: " << score << "\n";
+    std::cout << "Length of Snake: " << size << "\n";
 
-    // Ensure the game thread finishes execution
     gameThread.join();
   }
 
