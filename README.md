@@ -2,6 +2,8 @@
 
 Welcome to the Capstone project of the Udacity C++ Nanodegree Program. This repository serves as a starting point where you can either build a C++ application from scratch or enhance this Snake game. The goal is to showcase your ability to independently develop applications using various C++ features.
 
+<img src="snake-game.gif"/>
+
 ## Dependencies
 
 To build and run this project on your local machine, you need to install the following dependencies:
