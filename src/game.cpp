@@ -2,7 +2,6 @@
 #include <SDL.h>
 #include <iostream>
 
-
 Game::Game(std::size_t grid_width, std::size_t grid_height, GameSessionLogger &gameLogger)
     : snake(grid_width, grid_height),
       engine(std::random_device{}()),
@@ -139,9 +138,6 @@ void Game::Update()
     {
       score = (score == 0) ? 3 : score + 3;
 
-      is_bonus_food_active = false;
-      bonusCV.notify_one();
-
       PlaceBonusFood();
       score_changed = true;
     }
@@ -203,8 +199,19 @@ void Game::BonusFoodTimer()
       // Bonus food time is up
       is_bonus_food_active = false;
 
-      PlaceBonusFood();
-      break;
+      int x, y;
+      x = distribution_w(engine);
+      y = distribution_h(engine);
+
+      if (!snake.SnakeCell(x, y) && (x != food.x || y != food.y))
+      {
+        SpecialFood.x = x;
+        SpecialFood.y = y;
+        std::cout << "PlaceBonusFood-> " << x << ":" << y << std::endl;
+
+        is_bonus_food_active = true;
+        break;
+      }
     }
     lock.lock();
     // Wait for a short interval or until the condition_variable is notified
