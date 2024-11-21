@@ -25,9 +25,9 @@ public:
 
 private:
   void PlaceFood();
-  void PlaceSpecialFood();
   void Update();
-  void ScoreUpdateThread();
+  void ScoreUpdateThread();  
+  void PlaceBonusFood();
   void BonusFoodTimer();
 
   Snake snake;

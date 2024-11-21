@@ -9,7 +9,7 @@ Game::Game(std::size_t grid_width, std::size_t grid_height, GameSessionLogger &g
       gameLogger(gameLogger)
 {
   PlaceFood();
-  PlaceSpecialFood();
+  PlaceBonusFood();
   scoreThread = std::thread(&Game::ScoreUpdateThread, this);
 }
 
@@ -86,7 +86,7 @@ void Game::PlaceFood()
   }
 }
 
-void Game::PlaceSpecialFood()
+void Game::PlaceBonusFood()
 {
   int x, y;
   while (true)
@@ -94,11 +94,18 @@ void Game::PlaceSpecialFood()
     x = distribution_w(engine);
     y = distribution_h(engine);
 
+    std::cout << "PlaceBonusFood-> " << x << ":" << y << std::endl;
+
     if (!snake.SnakeCell(x, y) && (x != food.x || y != food.y))
     {
       SpecialFood.x = x;
       SpecialFood.y = y;
-      return;
+
+      is_bonus_food_active = true;
+
+      // Start the bonus food timer
+      std::thread(&Game::BonusFoodTimer, this).detach();
+      break;
     }
   }
 }
@@ -129,7 +136,7 @@ void Game::Update()
     if (is_bonus_food_active && SpecialFood.x == head_x && SpecialFood.y == head_y)
     {
       score = (score == 0) ? 3 : score + 3;
-      PlaceSpecialFood();
+      PlaceBonusFood();
       score_changed = true;
     }
 
@@ -143,7 +150,7 @@ void Game::Update()
   // if (recreate)
   // {
   //   recreate = false;
-  //   PlaceSpecialFood();
+  //   PlaceBonusFood();
   // }
 }
 
