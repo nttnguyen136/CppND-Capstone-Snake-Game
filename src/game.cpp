@@ -198,17 +198,17 @@ void Game::BonusFoodTimer()
     {
       // Bonus food time is up
       is_bonus_food_active = false;
+      break;
 
-      int x, y;
-      x = distribution_w(engine);
-      y = distribution_h(engine);
+      // int x, y;
+      // x = distribution_w(engine);
+      // y = distribution_h(engine);
 
-      if (!snake.SnakeCell(x, y) && (x != food.x || y != food.y))
-      {
-        SpecialFood.x = x;
-        SpecialFood.y = y;
-        break;
-      }
+      // if (!snake.SnakeCell(x, y) && (x != food.x || y != food.y))
+      // {
+      //   SpecialFood.x = x;
+      //   SpecialFood.y = y;
+      // }
     }
     lock.lock();
     // Wait for a short interval or until the condition_variable is notified
