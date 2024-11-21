@@ -57,7 +57,7 @@ void Game::Run(Controller const &controller, std::unique_ptr<Renderer> &renderer
       if (countdown == 0)
       {
         recreate = true;
-        countdown = 10;
+        countdown = 15;
       }
       countdown--;
       frames = 0;
@@ -134,12 +134,12 @@ void Game::Update()
       score_changed = true;
     }
 
-    if (is_bonus_food_active && SpecialFood.x == head_x && SpecialFood.y == head_y)
+    if (SpecialFood.x == head_x && SpecialFood.y == head_y)
     {
       score = (score == 0) ? 3 : score + 3;
-
-      PlaceBonusFood();
       score_changed = true;
+      is_bonus_food_active = false;
+      bonusCV.notify_one();
     }
 
     if (score_changed)
@@ -149,11 +149,10 @@ void Game::Update()
     }
   }
 
-  // if (recreate)
-  // {
-  //   recreate = false;
-  //   PlaceBonusFood();
-  // }
+  if (!is_bonus_food_active)
+  { // Check if bonus food is already active
+    PlaceBonusFood();
+  }
 }
 
 void Game::ScoreUpdateThread()
@@ -194,6 +193,7 @@ void Game::BonusFoodTimer()
     lock.unlock();
     auto currentTime = std::chrono::high_resolution_clock::now();
     auto elapsedSeconds = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime).count();
+
     if (elapsedSeconds >= bonusSeconds)
     {
       // Bonus food time is up
@@ -207,9 +207,6 @@ void Game::BonusFoodTimer()
       {
         SpecialFood.x = x;
         SpecialFood.y = y;
-        std::cout << "PlaceBonusFood-> " << x << ":" << y << std::endl;
-
-        is_bonus_food_active = true;
         break;
       }
     }
