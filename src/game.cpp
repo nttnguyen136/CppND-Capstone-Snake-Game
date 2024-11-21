@@ -138,6 +138,10 @@ void Game::Update()
     if (is_bonus_food_active && SpecialFood.x == head_x && SpecialFood.y == head_y)
     {
       score = (score == 0) ? 3 : score + 3;
+
+      is_bonus_food_active = false;
+      bonusCV.notify_one();
+
       PlaceBonusFood();
       score_changed = true;
     }
