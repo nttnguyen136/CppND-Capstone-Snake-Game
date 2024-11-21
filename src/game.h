@@ -11,7 +11,6 @@
 #include "snake.h"
 #include "GameSessionLogger.h"
 
-
 class Game
 {
 public:
@@ -29,6 +28,7 @@ private:
   void PlaceSpecialFood();
   void Update();
   void ScoreUpdateThread();
+  void BonusFoodTimer();
 
   Snake snake;
   std::mt19937 engine;
@@ -48,6 +48,11 @@ private:
   std::thread scoreThread;
   std::promise<void> exitSignal;
   bool pause{false};
+
+  std::mutex bonusMutex;
+  std::condition_variable bonusCV;
+  bool is_bonus_food_active{false};
+  SDL_Point bonus_add_food;
 };
 
 #endif // GAME_H

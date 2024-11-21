@@ -126,7 +126,7 @@ void Game::Update()
       score_changed = true;
     }
 
-    if (SpecialFood.x == head_x && SpecialFood.y == head_y)
+    if (is_bonus_food_active && SpecialFood.x == head_x && SpecialFood.y == head_y)
     {
       score = (score == 0) ? 3 : score + 3;
       PlaceSpecialFood();
@@ -140,11 +140,11 @@ void Game::Update()
     }
   }
 
-  if (recreate)
-  {
-    recreate = false;
-    PlaceSpecialFood();
-  }
+  // if (recreate)
+  // {
+  //   recreate = false;
+  //   PlaceSpecialFood();
+  // }
 }
 
 void Game::ScoreUpdateThread()
@@ -173,4 +173,28 @@ int Game::GetSize() const { return snake.size; }
 void Game::TogglePause(bool isPause)
 {
   pause = !pause && isPause;
+}
+
+void Game::BonusFoodTimer()
+{
+  const int bonusSeconds = 15;
+  auto startTime = std::chrono::high_resolution_clock::now();
+  std::unique_lock<std::mutex> lock(bonusMutex);
+  while (is_bonus_food_active)
+  {
+    lock.unlock();
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    auto elapsedSeconds = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime).count();
+    if (elapsedSeconds >= bonusSeconds)
+    {
+      // Bonus food time is up
+      is_bonus_food_active = false;
+      bonus_add_food.x = -1; // -1 can indicate the bonus food is not active
+      bonus_add_food.y = -1;
+      break;
+    }
+    lock.lock();
+    // Wait for a short interval or until the condition_variable is notified
+    bonusCV.wait_for(lock, std::chrono::milliseconds(500));
+  }
 }
