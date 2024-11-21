@@ -198,8 +198,8 @@ void Game::BonusFoodTimer()
     {
       // Bonus food time is up
       is_bonus_food_active = false;
-      bonus_add_food.x = -1; // -1 can indicate the bonus food is not active
-      bonus_add_food.y = -1;
+
+      PlaceBonusFood();
       break;
     }
     lock.lock();
