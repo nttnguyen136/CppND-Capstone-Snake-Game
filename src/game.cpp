@@ -53,13 +53,7 @@ void Game::Run(Controller const &controller, std::unique_ptr<Renderer> &renderer
 
     if (frame_end - title_time >= 1000)
     {
-      renderer->UpdateWindowTitle(score, frames, countdown);
-      if (countdown == 0)
-      {
-        recreate = true;
-        countdown = 15;
-      }
-      countdown--;
+      renderer->UpdateWindowTitle(score, frames);
       frames = 0;
       title_time = frame_end;
     }

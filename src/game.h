@@ -38,7 +38,6 @@ private:
   SDL_Point food;
   SDL_Point SpecialFood;
   bool recreate{false};
-  int countdown{10};
   GameSessionLogger &gameLogger;
 
   std::mutex scoreMutex;
